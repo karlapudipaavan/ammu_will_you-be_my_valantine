@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Lady ❤️</title>
+    <style>
+        :root {
+            --primary-pink: #ff4d6d;
+            --soft-pink: #fff0f3;
+            --dark-pink: #c9184a;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: var(--soft-pink);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            text-align: center;
+            transition: background-color 0.4s ease;
+        }
+
+        /* Blackout and Lightning Flash (Only for the "YES" transition) */
+        body.blackout { background-color: #000 !important; }
+        @keyframes flash {
+            0%, 100% { background-color: #000; }
+            40% { background-color: #222; }
+            60% { background-color: #444; }
+            80% { background-color: #111; }
+        }
+        .lightning-active { animation: flash 0.15s infinite; }
+
+        .container {
+            max-width: 600px;
+            width: 90%;
+            padding: 30px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            position: absolute;
+            transition: opacity 0.5s ease;
+            z-index: 10;
+        }
+
+        .hidden { display: none; opacity: 0; pointer-events: none; }
+        .visible { display: block; opacity: 1; pointer-events: all; }
+
+        h1 { color: var(--dark-pink); }
+        p { line-height: 1.6; color: #444; font-size: 1.05rem; text-align: left; }
+        .center-text { text-align: center; }
+
+        .profile-img {
+            width: 280px;
+            height: 280px;
+            object-fit: cover;
+            border-radius: 15px;
+            border: 5px solid white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            background-color: var(--primary-pink);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+            margin-top: 15px;
+        }
+
+        #noBtn {
+            background-color: #6c757d;
+            position: absolute;
+            z-index: 100;
+            transition: 0.15s ease-out;
+            white-space: nowrap;
+        }
+
+        .btn-container {
+            margin-top: 30px;
+            height: 120px;
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="bgMusic" loop>
+        <source src="Hoyla Hoyla.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="container visible" id="page1">
+        <img src="PHOTO-2025-03-16-12-08-52.jpg" alt="To My Lady" class="profile-img">
+        <h1 class="center-text">With love to my lady ❤️</h1>
+        <button class="btn" onclick="startExperience()">Next →</button>
+    </div>
+
+    <div class="container hidden" id="page2">
+        <p>
+            It’s been more than a year since the last time I met you, and somehow the world has kept moving while my heart stayed right there with you. You don’t know how much I miss you right now—how every quiet moment feels louder without your laugh in it, how every night ends with your name on my lips.
+            <br><br>
+            Sometimes I smile at the thought of you and think, <i>If missing you were a workout, I’d be in dangerously good shape…</i> and still ready to pin you against a wall just to remind you how wanted you are. Yeah still you, still that effect. I love you more 💝.
+            <br><br>
+            And thank you for everything you’ve done, for every kindness, every memory, every piece of yourself you gave without even realizing it. You’ve changed me, held me, and stayed with me even when you weren’t here.
+            <br><br>
+            A year later, and it’s still you. Always you. 💕
+        </p>
+        <button class="btn" onclick="showPage(3)">Next →</button>
+    </div>
+
+    <div class="container hidden" id="page3">
+        <h1>Happy Valentine’s Day, Ammu ❤️</h1>
+        <p class="center-text">
+            I don’t say this enough, but thank you for your confidence in me and for being with me through all the thick and thin. Your love, patience, and support mean more to me than I can ever explain. I’m so lucky to have you.
+        </p>
+        <hr style="border: 0.5px solid #ffccd5; margin: 20px 0;">
+        <h3 class="center-text">Will you be my Valentine?</h3>
+        
+        <div class="btn-container">
+            <button id="yesBtn" class="btn" style="font-size: 1.4rem;" onclick="triggerGrandFinale()">YES!</button>
+            <button id="noBtn" class="btn">No</button>
+        </div>
+    </div>
+
+    <div class="container hidden" id="page4">
+        <h1 style="color: var(--dark-pink); font-size: 2.5rem;">YAY! ❤️‍🔥</h1>
+        <p class="center-text">
+            Thank you for being my Valentine. I love you with my whole heart. Every day with you reminds me how lucky I am to love someone so kind, strong, and beautiful inside and out.
+        </p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
+    <script>
+        const music = document.getElementById('bgMusic');
+        const noBtn = document.getElementById('noBtn');
+
+        function startExperience() {
+            // Music starts when she clicks the first button
+            music.play().catch(() => console.log("Music play blocked by browser"));
+            showPage(2);
+        }
+
+        function showPage(num) {
+            document.querySelectorAll('.container').forEach(c => {
+                c.classList.add('hidden');
+                c.classList.remove('visible');
+            });
+            if (num > 0) {
+                const next = document.getElementById(`page${num}`);
+                next.classList.remove('hidden');
+                next.classList.add('visible');
+            }
+        }
+
+        // NO Button Evasion logic
+        document.addEventListener('mousemove', (e) => {
+            const page3 = document.getElementById('page3');
+            if (!page3.classList.contains('visible')) return;
+
+            const x = e.clientX;
+            const y = e.clientY;
+            const btnRect = noBtn.getBoundingClientRect();
+            const btnCenterX = btnRect.left + btnRect.width / 2;
+            const btnCenterY = btnRect.top + btnRect.height / 2;
+            const distance = Math.hypot(x - btnCenterX, y - btnCenterY);
+
+            if (distance < 100) {
+                const maxX = window.innerWidth - btnRect.width - 60;
+                const maxY = window.innerHeight - btnRect.height - 60;
+                const newX = Math.max(60, Math.random() * maxX);
+                const newY = Math.max(60, Math.random() * maxY);
+                
+                noBtn.style.position = 'fixed';
+                noBtn.style.left = `${newX}px`;
+                noBtn.style.top = `${newY}px`;
+            }
+        });
+
+        function triggerGrandFinale() {
+            showPage(0); 
+            document.body.classList.add('blackout', 'lightning-active');
+
+            const duration = 4000; 
+            const animationEnd = Date.now() + duration;
+
+            const interval = setInterval(function() {
+                const timeLeft = animationEnd - Date.now();
+                if (timeLeft <= 0) {
+                    clearInterval(interval);
+                    document.body.classList.remove('blackout', 'lightning-active');
+                    showPage(4); 
+                    return;
+                }
+                confetti({
+                    particleCount: 40,
+                    startVelocity: 35,
+                    spread: 360,
+                    origin: { x: Math.random(), y: Math.random() - 0.2 },
+                    colors: ['#ffffff', '#ffd700', '#ff0055'] 
+                });
+            }, 200);
+        }
+    </script>
+</body>
+</html>
